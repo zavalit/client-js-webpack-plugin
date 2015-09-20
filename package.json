@@ -1,0 +1,23 @@
+{
+  "name": "client-js-webpack-plugin",
+  "version": "0.0.1",
+  "description": "Provides client js libraries in one client.js file",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:zavalit/client-js-webpack-plugin.git"
+  },
+  "keywords": [
+    "webpack",
+    "js"
+  ],
+  "author": "Seva Dolgopolov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zavalit/client-js-webpack-plugin/issues"
+  },
+  "homepage": "https://github.com/zavalit/client-js-webpack-plugin"
+}

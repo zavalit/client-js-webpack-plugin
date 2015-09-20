@@ -28,7 +28,7 @@ ClientJsWebpackPlugin.prototype.apply = function(compiler)
 }
 
 ClientJsWebpackPlugin.prototype.processData = function (data){
-  fs.appendFile(this.dest_file_path, data, function(err){
+  fs.appendFile(this.dest_file_path, data + '\n', function(err){
     if(err !== null)
       console.log(err);
 

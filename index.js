@@ -1,4 +1,5 @@
-var fs = require('fs');
+var Promise = require('bluebird');
+var fs = Promise.promisifyAll(require('fs'));
 
 function ClientJsWebpackPlugin(libraries)
 {
@@ -9,22 +10,29 @@ function ClientJsWebpackPlugin(libraries)
 
 ClientJsWebpackPlugin.prototype.apply = function(compiler)
 {
-  fs.writeFile(this.dest_file_path, '//client.js\n', function(err){
-    if(err !== null)
-      console.log(err);
-  })
+  compiler.plugin('emit', function(compilation, done) {
 
-  this.libraries.forEach(function(path){
-    fs.readFile(this.vendor_dir_path + path, function(err, data){
+    var content = "";
+    var vendor_dir_path = this.vendor_dir_path;
 
-      if(err !== null)
-        console.log(err);
+    var Promises = this.libraries.map(function(path){
+      return fs.readFileAsync(vendor_dir_path + path).then(function(data){
 
-      this.processData(data);
-    }.bind(this));
-  }.bind(this))
-  
-  console.log(this.dest_file_path + " created!");
+        content = content + '\n\n' +  data;
+
+      });
+    });
+
+    Promise.all(Promises).then(function(){
+      compilation.assets["client.js"] = this.createAssetFromContent(content);
+    }.bind(this)).nodeify(done);
+
+ }.bind(this));
+}
+
+ClientJsWebpackPlugin.prototype.loadContent = function (){
+
+
 }
 
 ClientJsWebpackPlugin.prototype.processData = function (data){
@@ -34,6 +42,17 @@ ClientJsWebpackPlugin.prototype.processData = function (data){
 
 
   })
+}
+
+ClientJsWebpackPlugin.prototype.createAssetFromContent = function (contents){
+   return {
+     source: function() {
+       return contents;
+     },
+     size: function() {
+       return contents.length;
+     }
+   };
 }
 
 

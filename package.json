@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/zavalit/client-js-webpack-plugin/issues"
   },
-  "homepage": "https://github.com/zavalit/client-js-webpack-plugin"
+  "homepage": "https://github.com/zavalit/client-js-webpack-plugin",
+  "dependencies": {
+    "bluebird": "~2.10.2"
+  }
 }

@@ -30,19 +30,6 @@ ClientJsWebpackPlugin.prototype.apply = function(compiler)
  }.bind(this));
 }
 
-ClientJsWebpackPlugin.prototype.loadContent = function (){
-
-
-}
-
-ClientJsWebpackPlugin.prototype.processData = function (data){
-  fs.appendFile(this.dest_file_path, '\n\n'+data, function(err){
-    if(err !== null)
-      console.log(err);
-
-
-  })
-}
 
 ClientJsWebpackPlugin.prototype.createAssetFromContent = function (contents){
    return {

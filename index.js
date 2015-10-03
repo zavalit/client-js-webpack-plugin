@@ -12,26 +12,33 @@ ClientJsWebpackPlugin.prototype.apply = function(compiler)
 {
   compiler.plugin('emit', function(compilation, done) {
 
-    var content = "";
+    var content_blocks = []
     var vendor_dir_path = this.vendor_dir_path;
 
     var Promises = this.libraries.map(function(path){
       return fs.readFileAsync(vendor_dir_path + path).then(function(data){
 
-        content = content + '\n\n' +  data;
+        content_blocks[path] =  '\n\n' +  data;
 
       });
     });
 
     Promise.all(Promises).then(function(){
-      compilation.assets["client.js"] = this.createAssetFromContent(content);
+      compilation.assets["client.js"] = this.createAssetFromContent(content_blocks);
     }.bind(this)).nodeify(done);
 
  }.bind(this));
 }
 
 
-ClientJsWebpackPlugin.prototype.createAssetFromContent = function (contents){
+ClientJsWebpackPlugin.prototype.createAssetFromContent = function (content_blocks){
+
+  var contents = "";
+
+  this.libraries.forEach(function(path){
+      contents = contents + '\n\n' + content_blocks[path]
+  })
+
    return {
      source: function() {
        return contents;

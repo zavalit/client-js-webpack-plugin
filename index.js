@@ -3,8 +3,8 @@ var fs = Promise.promisifyAll(require('fs'));
 
 function ClientJsWebpackPlugin(libraries)
 {
-  this.vendor_dir_path = "/var/www/node_modules/";
-  this.dest_file_path = "/var/www/public/client.js";
+  this.vendor_dir_path = "./node_modules/";
+  this.dest_file_path = "./public/client.js";
   this.libraries = libraries;
 }
 
